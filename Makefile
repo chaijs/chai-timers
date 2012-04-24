@@ -13,4 +13,11 @@ test:
 		--reporter $(REPORTER) \
 		$(TESTS)
 
-.PHONY: all clean test
+test-cov: lib-cov
+	@CHAI_TIMERS_COV=1 $(MAKE) test REPORTER=html-cov > coverage.html
+
+lib-cov:
+	@rm -rf lib-cov
+	@jscoverage lib lib-cov
+
+.PHONY: all clean test test-cov lib-cov
