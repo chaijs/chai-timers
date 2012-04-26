@@ -78,4 +78,35 @@ describe('Chai Timers', function () {
     }, 10);
   });
 
+  it('should be able to assert `after`', function (done) {
+    var timer1 = new chai.Timer('timer1');
+    timer1.start();
+
+    setTimeout(function () {
+      var timer2 = new chai.Timer('timer2');
+      timer1.stop();
+      timer2.start();
+
+      timer2.should.have.been.created.after(timer1);
+      timer1.should.have.not.been.created.after(timer2)
+
+      timer2.should.have.started.after(timer1);
+      timer1.should.have.not.started.after(timer2);
+
+      (function () {
+        timer2.should.have.not.started.after(timer1);
+      }).should.throw(chai.AssertionError, /to not have been started after/);
+
+      (function () {
+        timer1.should.have.started.after(timer2);
+      }).should.throw(chai.AssertionError, /to have been started after/);
+
+      setTimeout(function () {
+        timer2.stop();
+        timer2.should.have.stopped.after(timer1);
+        timer1.should.have.not.stopped.after(timer2);
+        done();
+      }, 10);
+    }, 10);
+  });
 });
