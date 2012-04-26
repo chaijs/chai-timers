@@ -63,11 +63,11 @@ describe('Chai Timers', function () {
 
       (function () {
         timer1.should.have.not.started.before(timer2);
-      }).should.throw(chai.AssertionError, /to not have started before/);
+      }).should.throw(chai.AssertionError, /to not have been started before/);
 
       (function () {
         timer2.should.have.started.before(timer1);
-      }).should.throw(chai.AssertionError, /to have started before/);
+      }).should.throw(chai.AssertionError, /to have been started before/);
 
       setTimeout(function () {
         timer2.stop();
