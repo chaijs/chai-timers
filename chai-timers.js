@@ -90,34 +90,28 @@ module.exports = function (chai, _) {
     , configurable: true
   });
 
-  _.addProperty(chai.Assertion, 'timer', function () {
-    var obj = _.flag(this, 'object');
-
+  chai.Assertion.addProperty('timer', function () {
     this.assert(
-        obj instanceof chai.Timer
+        this._obj instanceof chai.Timer
       , 'expected #{this} to be a chai timer'
       , 'expected #{this} to not be a chai timer' );
-
-    return this;
   });
 
   [ 'started', 'stopped', 'created' ].forEach(function (when) {
-    _.overwriteProperty(chai.Assertion, when, function (_super) {
+    chai.Assertion.overwriteProperty(when, function (_super) {
       return function () {
-        var obj = _.flag(this, 'object');
-        if (obj instanceof chai.Timer) {
+        if (this._obj instanceof chai.Timer) {
           _.flag(this, 'timer_when', when);
         } else {
           _super.call(this);
         }
-        return this;
       }
     });
   });
 
-  _.overwriteMethod(chai.Assertion, 'before', function (_super) {
+  chai.Assertion.overwriteMethod('before', function (_super) {
     return function assertBefore (timer2, when2) {
-      var timer1 = _.flag(this, 'object')
+      var timer1 = this._obj;
       new chai.Assertion(timer1).to.be.a.timer;
       new chai.Assertion(timer2).to.be.a.timer;
 
@@ -134,9 +128,9 @@ module.exports = function (chai, _) {
     };
   });
 
-  _.overwriteMethod(chai.Assertion, 'after', function (_super) {
+  chai.Assertion.overwriteMethod('after', function (_super) {
     return function assertBefore (timer2, when2) {
-      var timer1 = _.flag(this, 'object')
+      var timer1 = this._obj;
       new chai.Assertion(timer1).to.be.a.timer;
       new chai.Assertion(timer2).to.be.a.timer;
 
