@@ -3,6 +3,7 @@
   "name": "chai-timers",
   "description": "Allows the Chai Assertion library to create and measure timers.",
   "version": "0.2.0",
+  "keywords": ["chai", "chai-plugin", "browser", "math", "time", "timers"],
   "repository": {
     "type": "git",
     "url": "git://github.com/chaijs/chai-timers.git"
