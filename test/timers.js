@@ -41,7 +41,7 @@ describe('Chai Timers', function () {
       timer.created.should.be.a('date');
 
       timer.should.have.property('elapsed')
-        .to.be.a('number').above('9');
+        .to.be.a('number').above(9);
       done();
     }, 10);
   });
