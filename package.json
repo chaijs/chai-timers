@@ -14,7 +14,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "mocha": "*",
+    "mocha": ">=7.1.2",
     "chai": "*",
     "folio": "0.3.x"
   },
